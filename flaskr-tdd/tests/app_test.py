@@ -1,4 +1,3 @@
-import os
 import pytest
 import json
 
@@ -75,8 +74,8 @@ def test_messages(client):
     assert b"No entries here so far" not in rv.data
     assert b"&lt;Hello&gt;" in rv.data
     assert b"<strong>HTML</strong> allowed here" in rv.data
-    
-    
+
+
 def test_delete_message(client):
     """Ensure the messages are being deleted"""
     rv = client.get("/delete/1")
@@ -86,12 +85,12 @@ def test_delete_message(client):
     rv = client.get("/delete/1")
     data = json.loads(rv.data)
     assert data["status"] == 1
-    assert data['message'] == 'Post Deleted'
-    
+    assert data["message"] == "Post Deleted"
+
 
 def test_search(client):
     """Ensure the search functionality filters works"""
-    rv = client.get('/search/')
+    rv = client.get("/search/")
     assert rv.status_code == 200
 
 
@@ -100,5 +99,5 @@ def test_delete_message_not_logged_in(client):
     rv = client.get("/delete/1")
     data = json.loads(rv.data)
     assert rv.status_code == 401
-    assert data['status'] == 0
-    assert data['message'] == 'Please log in.'
+    assert data["status"] == 0
+    assert data["message"] == "Please log in."
